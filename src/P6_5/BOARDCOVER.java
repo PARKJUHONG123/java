@@ -9,11 +9,11 @@ public class BOARDCOVER {
     static int[][] hArr = {{1, 1}, {0, 1}, {1, 1}, {0, 1}};
     static int[][] wArr = {{-1, 0}, {1, 1}, {0, 1}, {1, 0}};
     static int H, W;
+    static char[][] board;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
-        char[][] board;
         int left;
 
         int C = Integer.parseInt(br.readLine());
@@ -32,7 +32,7 @@ public class BOARDCOVER {
                 }
             }
             if (left % 3 == 0) {
-                System.out.println(locateBlock(0, 0, left, board));
+                System.out.println(locateBlock(0, 0, left));
             }
             else {
                 System.out.println("0");
@@ -50,8 +50,7 @@ public class BOARDCOVER {
     }
 
 
-    static int locateBlock(int h, int w, int left, char[][] board) {
-        int ret = 0;
+    static int locateBlock(int h, int w, int left) {
         if (left == 0) {
             return 1;
         }
@@ -66,6 +65,7 @@ public class BOARDCOVER {
             }
         }
 
+        int ret = 0;
         if (board[h][w] == '.') {
             for (int i = 0; i < 4; i++) {
                 int first_h = h + hArr[i][0];
@@ -78,7 +78,7 @@ public class BOARDCOVER {
                         board[first_h][first_w] = '#';
                         board[second_h][second_w] = '#';
 
-                        ret += locateBlock(h, w, left - 3, board);
+                        ret += locateBlock(h, w, left - 3);
 
                         board[h][w] = '.';
                         board[first_h][first_w] = '.';
@@ -88,7 +88,7 @@ public class BOARDCOVER {
             }
         }
         else {
-            ret += locateBlock(h, w + 1, left, board);
+            ret += locateBlock(h, w + 1, left);
         }
         return ret;
     }
