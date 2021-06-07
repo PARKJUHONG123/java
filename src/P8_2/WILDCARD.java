@@ -42,9 +42,16 @@ public class WILDCARD {
             return ret == 1;
         }
 
+        /*
         while (s < sLen && w < wLen && (W.charAt(w) == '?' || W.charAt(w) == S.charAt(s))) {
             w += 1;
             s += 1;
+        }
+        */
+        if (s < sLen && w < wLen && (W.charAt(w) == '?' || W.charAt(w) == S.charAt(s))) {
+            boolean c = checkFileName(w + 1, s + 1);
+            cache[w][s] = c ? 1 : 0;
+            return c;
         }
 
         if (w == wLen) {
@@ -53,12 +60,21 @@ public class WILDCARD {
             return s == sLen;
         }
 
+        /*
         if (W.charAt(w) == '*') {
             for (int skip = 0; skip + s <= sLen; skip++) {
                 if (checkFileName(w + 1, s + skip)) {
                     cache[w][s] = 1;
                     return true;
                 }
+            }
+        }
+         */
+
+        if (W.charAt(w) == '*') {
+            if (checkFileName(w + 1, s) || (s < sLen && checkFileName(w, s + 1))) {
+                cache[w][s] = 1;
+                return true;
             }
         }
 
